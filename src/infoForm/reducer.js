@@ -1,10 +1,15 @@
 export const initialState = {
-  workStart: 0,
-  estimatedDuration: 0
+  workStart: new Date(),
+  estimatedDuration: '0'
 };
 
 const reducer = (initialState, action) => {
-  return initialState;
+  switch (action.type) {
+  case 'infoForm.save':
+    return action.formInfo;
+  default:
+    return initialState;
+  }
 };
 
 export default reducer;
