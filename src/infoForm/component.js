@@ -8,6 +8,7 @@ import { onSave } from './actions';
 
 const InfoForm = React.createClass({
   getInitialState() {
+    console.log(this.props);
     return {
       workStart: this.props.workStart,
       estimatedDuration: this.props.estimatedDuration,

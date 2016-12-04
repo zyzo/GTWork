@@ -1,4 +1,4 @@
-import reducer, { initialState } from './reducer';
+import reducer, { defaultInitialState as initialState } from './reducer';
 import InfoForm from './component';
 
 export {
