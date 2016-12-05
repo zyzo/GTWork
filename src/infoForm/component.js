@@ -35,11 +35,8 @@ const InfoForm = React.createClass({
   },
   render() {
     return (
-      <View style={{flex: 1, flexDirection: 'column', marginTop: 40}}>
-        <View style={{flex: 4}}>
-          <Text>
-            Work starts at
-          </Text>
+      <View style={{flex: 1, flexDirection: 'column', marginTop: 40, backgroundColor: '#ededed'}}>
+        <View style={{flex: 3}}>
           <DatePickerIOS
             date={this.state.workStart}
             mode="time"
@@ -48,23 +45,29 @@ const InfoForm = React.createClass({
               this.setState({workStart: input});
             }}
           />
+          <Text style={{ flex: 1, textAlign: 'center', marginTop: 40 }}>
+            Work starts
+          </Text>
         </View>
         <View style={{flex: 1}}>
-          <Text style={{flex: 0.5}}>
-            Estimated Duration
-          </Text>
           <TextInput
-            style={{flex: 0.5}}
+            style={{flex: 1, textAlign: 'center', fontSize: 40}}
             onChangeText={input => {
               this.setState({estimatedDuration: input});
             }}
-            placeholder="Enter work start hour!"
             keyboardType="numeric"
             value={this.state.estimatedDuration}
           />
+          <Text style={{flex: 0.5, textAlign: 'center', marginTop: 40}}>
+            Estimated Duration
+          </Text>
         </View>
-        <View style={{flex: 3, paddingTop: 10}}>
-          <Button color="red" title="Save" onPress={this.onSave}/>
+        <View style={{flex: 0.5, marginTop: 40, backgroundColor: 'white', justifyContent: 'center',
+          alignItems: 'center'}}>
+          <Button color="#ade611"
+            title="Save"
+            onPress={this.onSave}
+          />
         </View>
       </View>
     );
