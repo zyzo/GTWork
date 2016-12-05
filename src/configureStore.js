@@ -12,9 +12,14 @@ const loggerMiddleware = createLogger({
 
 const persistenceMiddleware = ({ getState, dispatch}) => next => action => {
   try {
-    AsyncStorage.setItem('GTWork.state', getState());
+    AsyncStorage.setItem('GTWork.state', JSON.stringify(action.formInfo)).then(() => {
+      console.log('local saving done');
+    }).catch(error => {
+      console.log(error);
+    });
   } catch (error) {
     // Error saving data
+    console.log(error);
   }
 };
 

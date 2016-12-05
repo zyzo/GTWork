@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "./node_modules/.bin/react-native run-ios",
+    "clean": "watchman watch-del-all && ./node_modules/react-native/packager/packager.sh start --reset-cache",
     "test": "jest"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
   "devDependencies": {
     "babel-jest": "17.0.2",
     "babel-preset-react-native": "1.9.0",
+    "babel-preset-stage-3": "^6.17.0",
     "eslint": "^3.11.1",
     "eslint-plugin-react": "^6.7.1",
     "eslint-plugin-react-native": "^2.2.0",

@@ -1,14 +1,15 @@
 import React from 'react';
 import _ from 'underscore';
+import immutable from 'immutable';
 import { connect } from 'react-redux';
 import {
   View, TextInput, Text, DatePickerIOS, Button
 } from 'react-native';
 import { onSave } from './actions';
+import { getInitialState, onLoadState } from '../reducers';
 
 const InfoForm = React.createClass({
   getInitialState() {
-    console.log(this.props);
     return {
       workStart: this.props.workStart,
       estimatedDuration: this.props.estimatedDuration,
@@ -16,7 +17,15 @@ const InfoForm = React.createClass({
     };
   },
   onSave() {
-    this.props.onSave(this.temporaryInputs);
+    this.props.onSave(immutable.fromJS({
+      workStart: this.state.workStart,
+      estimatedDuration: this.state.estimatedDuration
+    }));
+  },
+  componentDidMount() {
+    getInitialState().then(initialState => {
+      this.props.onSave(initialState);
+    });
   },
   render() {
     return (
@@ -62,7 +71,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSave: _.compose(dispatch, onSave)
+  onSave: _.compose(dispatch, onSave),
+  onLoadState: _.compose(dispatch, onLoadState)
 });
 
 export default connect(

@@ -1,20 +1,21 @@
 import immutable from 'immutable';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { initialState as infoForm } from '../infoForm';
 
-const defaultInitialState = immutable.fromJS(
-  {
-    infoForm
-  }
-);
+export const defaultInitialState = immutable.fromJS({
+  infoForm
+});
 
-const getInitialState = () => {
-  return AsyncStorage.getItem('GTWork.state:key').then(value => {
+const getInitialState = () =>
+  AsyncStorage.getItem('GTWork.state').then(value => {
     if (value !== null){
-      return immutable.fromJS(value);
+      // We have data!!
+      return immutable.fromJS(JSON.parse(value));
     }
     return defaultInitialState;
-  }).catch(() => defaultInitialState);
-};
+  }).catch(() => {
+    // Error retrieving data
+    return defaultInitialState;
+  });
 
 export default getInitialState;
