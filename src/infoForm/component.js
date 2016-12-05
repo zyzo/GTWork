@@ -1,12 +1,11 @@
 import React from 'react';
+import { AsyncStorage } from 'react-native';
 import _ from 'underscore';
-import immutable from 'immutable';
 import { connect } from 'react-redux';
 import {
   View, TextInput, Text, DatePickerIOS, Button
 } from 'react-native';
 import { onSave } from './actions';
-import { getInitialState, onLoadState } from '../reducers';
 
 const InfoForm = React.createClass({
   getInitialState() {
@@ -16,15 +15,22 @@ const InfoForm = React.createClass({
       timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
     };
   },
+  componentDidMount() {
+    AsyncStorage.getItem('@GTWork:infoForm').then(value => {
+      if (_.isUndefined(value)) {
+        return;
+      }
+      const savedFormInfo = JSON.parse(value);
+      this.setState({
+        workStart: new Date(savedFormInfo.workStart),
+        estimatedDuration: savedFormInfo.estimatedDuration
+      });
+    });
+  },
   onSave() {
-    this.props.onSave(immutable.fromJS({
+    this.props.onSave({
       workStart: this.state.workStart,
       estimatedDuration: this.state.estimatedDuration
-    }));
-  },
-  componentDidMount() {
-    getInitialState().then(initialState => {
-      this.props.onSave(initialState);
     });
   },
   render() {
@@ -71,8 +77,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSave: _.compose(dispatch, onSave),
-  onLoadState: _.compose(dispatch, onLoadState)
+  onSave: _.compose(dispatch, onSave)
 });
 
 export default connect(

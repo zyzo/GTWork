@@ -1,22 +1,18 @@
 import immutable from 'immutable';
-
-export const defaultInitialState = {
+export const initialState = immutable.fromJS({
   workStart: new Date(),
   estimatedDuration: '0'
-};
+});
 
-const reducer = (initialState, action) => {
-  console.log(initialState, action);
-  if (initialState === undefined) {
-    initialState = immutable.fromJS(defaultInitialState);
-  }
-  console.log("adnasdo")
+const reducer = (state = initialState, action) => {
   switch (action.type) {
   case 'infoForm.save':
-    console.log('hahadsada');
-    return action.formInfo;
+    const newState = state
+      .set('estimatedDuration', action.estimatedDuration)
+      .set('workStart', action.workStart);
+    return newState;
   default:
-    return initialState;
+    return state;
   }
 };
 
